@@ -1,3 +1,7 @@
+# Ignorar archivos específicos
+Lab2
+patient_list.csv
+
 # Prerequisites
 *.d
 
