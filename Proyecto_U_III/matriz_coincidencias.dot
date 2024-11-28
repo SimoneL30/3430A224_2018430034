@@ -1,0 +1,120 @@
+digraph G {
+  graph [rankdir=LR, nodesep=0.5, ranksep=0.5];
+  node [shape=circle, width=0.3, height=0.3, style=filled, fontcolor=black];
+  { rank=source; empty [shape=none, label=""]; header0 [label="A", shape=none]; header1 [label="C", shape=none]; header2 [label="C", shape=none]; header3 [label="C", shape=none]; header4 [label="T", shape=none]; }
+  { rank=same; label0 [label="C", shape=none, fontcolor=black]; node0_0 [fillcolor=white, label=""];
+node0_1 [fillcolor=purple, label=""];
+node0_2 [fillcolor=purple, label=""];
+node0_3 [fillcolor=purple, label=""];
+node0_4 [fillcolor=white, label=""];
+}
+  { rank=same; label1 [label="C", shape=none, fontcolor=black]; node1_0 [fillcolor=white, label=""];
+node1_1 [fillcolor=purple, label=""];
+node1_2 [fillcolor=purple, label=""];
+node1_3 [fillcolor=purple, label=""];
+node1_4 [fillcolor=white, label=""];
+}
+  { rank=same; label2 [label="C", shape=none, fontcolor=black]; node2_0 [fillcolor=white, label=""];
+node2_1 [fillcolor=purple, label=""];
+node2_2 [fillcolor=purple, label=""];
+node2_3 [fillcolor=purple, label=""];
+node2_4 [fillcolor=white, label=""];
+}
+  { rank=same; label3 [label="A", shape=none, fontcolor=black]; node3_0 [fillcolor=purple, label=""];
+node3_1 [fillcolor=white, label=""];
+node3_2 [fillcolor=white, label=""];
+node3_3 [fillcolor=white, label=""];
+node3_4 [fillcolor=white, label=""];
+}
+  { rank=same; label4 [label="T", shape=none, fontcolor=black]; node4_0 [fillcolor=white, label=""];
+node4_1 [fillcolor=white, label=""];
+node4_2 [fillcolor=white, label=""];
+node4_3 [fillcolor=white, label=""];
+node4_4 [fillcolor=purple, label=""];
+}
+  { rank=same; label5 [label="T", shape=none, fontcolor=black]; node5_0 [fillcolor=white, label=""];
+node5_1 [fillcolor=white, label=""];
+node5_2 [fillcolor=white, label=""];
+node5_3 [fillcolor=white, label=""];
+node5_4 [fillcolor=purple, label=""];
+}
+  { rank=same; label6 [label="G", shape=none, fontcolor=black]; node6_0 [fillcolor=white, label=""];
+node6_1 [fillcolor=white, label=""];
+node6_2 [fillcolor=white, label=""];
+node6_3 [fillcolor=white, label=""];
+node6_4 [fillcolor=white, label=""];
+}
+  { rank=same; label7 [label="C", shape=none, fontcolor=black]; node7_0 [fillcolor=white, label=""];
+node7_1 [fillcolor=purple, label=""];
+node7_2 [fillcolor=purple, label=""];
+node7_3 [fillcolor=purple, label=""];
+node7_4 [fillcolor=white, label=""];
+}
+node0_0 -> node0_1 [color=gray, arrowhead=none];
+node0_1 -> node0_2 [color=gray, arrowhead=none];
+node0_2 -> node0_3 [color=gray, arrowhead=none];
+node0_3 -> node0_4 [color=gray, arrowhead=none];
+node1_0 -> node1_1 [color=gray, arrowhead=none];
+node1_1 -> node1_2 [color=gray, arrowhead=none];
+node1_2 -> node1_3 [color=gray, arrowhead=none];
+node1_3 -> node1_4 [color=gray, arrowhead=none];
+node2_0 -> node2_1 [color=gray, arrowhead=none];
+node2_1 -> node2_2 [color=gray, arrowhead=none];
+node2_2 -> node2_3 [color=gray, arrowhead=none];
+node2_3 -> node2_4 [color=gray, arrowhead=none];
+node3_0 -> node3_1 [color=gray, arrowhead=none];
+node3_1 -> node3_2 [color=gray, arrowhead=none];
+node3_2 -> node3_3 [color=gray, arrowhead=none];
+node3_3 -> node3_4 [color=gray, arrowhead=none];
+node4_0 -> node4_1 [color=gray, arrowhead=none];
+node4_1 -> node4_2 [color=gray, arrowhead=none];
+node4_2 -> node4_3 [color=gray, arrowhead=none];
+node4_3 -> node4_4 [color=gray, arrowhead=none];
+node5_0 -> node5_1 [color=gray, arrowhead=none];
+node5_1 -> node5_2 [color=gray, arrowhead=none];
+node5_2 -> node5_3 [color=gray, arrowhead=none];
+node5_3 -> node5_4 [color=gray, arrowhead=none];
+node6_0 -> node6_1 [color=gray, arrowhead=none];
+node6_1 -> node6_2 [color=gray, arrowhead=none];
+node6_2 -> node6_3 [color=gray, arrowhead=none];
+node6_3 -> node6_4 [color=gray, arrowhead=none];
+node7_0 -> node7_1 [color=gray, arrowhead=none];
+node7_1 -> node7_2 [color=gray, arrowhead=none];
+node7_2 -> node7_3 [color=gray, arrowhead=none];
+node7_3 -> node7_4 [color=gray, arrowhead=none];
+node0_0 -> node1_0 [color=gray, arrowhead=none];
+node1_0 -> node2_0 [color=gray, arrowhead=none];
+node2_0 -> node3_0 [color=gray, arrowhead=none];
+node3_0 -> node4_0 [color=gray, arrowhead=none];
+node4_0 -> node5_0 [color=gray, arrowhead=none];
+node5_0 -> node6_0 [color=gray, arrowhead=none];
+node6_0 -> node7_0 [color=gray, arrowhead=none];
+node0_1 -> node1_1 [color=gray, arrowhead=none];
+node1_1 -> node2_1 [color=gray, arrowhead=none];
+node2_1 -> node3_1 [color=gray, arrowhead=none];
+node3_1 -> node4_1 [color=gray, arrowhead=none];
+node4_1 -> node5_1 [color=gray, arrowhead=none];
+node5_1 -> node6_1 [color=gray, arrowhead=none];
+node6_1 -> node7_1 [color=gray, arrowhead=none];
+node0_2 -> node1_2 [color=gray, arrowhead=none];
+node1_2 -> node2_2 [color=gray, arrowhead=none];
+node2_2 -> node3_2 [color=gray, arrowhead=none];
+node3_2 -> node4_2 [color=gray, arrowhead=none];
+node4_2 -> node5_2 [color=gray, arrowhead=none];
+node5_2 -> node6_2 [color=gray, arrowhead=none];
+node6_2 -> node7_2 [color=gray, arrowhead=none];
+node0_3 -> node1_3 [color=gray, arrowhead=none];
+node1_3 -> node2_3 [color=gray, arrowhead=none];
+node2_3 -> node3_3 [color=gray, arrowhead=none];
+node3_3 -> node4_3 [color=gray, arrowhead=none];
+node4_3 -> node5_3 [color=gray, arrowhead=none];
+node5_3 -> node6_3 [color=gray, arrowhead=none];
+node6_3 -> node7_3 [color=gray, arrowhead=none];
+node0_4 -> node1_4 [color=gray, arrowhead=none];
+node1_4 -> node2_4 [color=gray, arrowhead=none];
+node2_4 -> node3_4 [color=gray, arrowhead=none];
+node3_4 -> node4_4 [color=gray, arrowhead=none];
+node4_4 -> node5_4 [color=gray, arrowhead=none];
+node5_4 -> node6_4 [color=gray, arrowhead=none];
+node6_4 -> node7_4 [color=gray, arrowhead=none];
+}
