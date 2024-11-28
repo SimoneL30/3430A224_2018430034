@@ -7,7 +7,6 @@ Este proyecto implementa el algoritmo de alineación de secuencias de ADN usando
 2. [Instalación](#instalación)
 3. [Uso](#uso)
 4. [Contribución](#contribución)
-5. [Licencia](#licencia)
 
 ## Descripción
 
@@ -24,17 +23,16 @@ Este proyecto realiza una alineación global de dos secuencias de ADN, considera
 
    sudo apt-get install graphviz
 
-Clonar el repositorio
 Primero, clona el repositorio:
 
 git clone https://github.com/usuario/Proyecto_U_III.git
-cd Proyecto_U_III
+Proyecto_U_III
 
 Compila el código fuente con g++:
 
 g++ Alineamiento.cpp -o alineamiento
 
-Uso
+##Uso
 El programa se ejecuta desde la línea de comandos con los siguientes parámetros:
 
 :~$ ./alineamiento -C1 cad1.tex -C2 cad2.tex -U funU.tex -V val
@@ -59,7 +57,7 @@ AGCTG
 AGCT-
 Puntaje máximo: 15
 
-Contribución
+##Contribución
 Si deseas contribuir a este proyecto, sigue estos pasos:
 
 Haz un fork del repositorio.
