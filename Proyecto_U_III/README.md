@@ -1,6 +1,6 @@
-# Alineación de Secuencias de ADN utilizando Needleman-Wunsch
+# Alineamiento de Secuencias de ADN utilizando Needleman-Wunsch
 
-Este proyecto implementa el algoritmo de alineación de secuencias de ADN usando el algoritmo de *Needleman-Wunsch* para encontrar la mejor alineación entre dos secuencias de ADN. Además, genera una representación gráfica de la matriz de coincidencias en formato PNG utilizando Graphviz.
+Este proyecto implementa el algoritmo de alineamiento de secuencias de ADN usando el algoritmo de *Needleman-Wunsch* para encontrar la mejor alineación entre dos secuencias de ADN. Además, genera una representación gráfica de la matriz de coincidencias en formato PNG utilizando Graphviz.
 
 ## Tabla de Contenidos
 1. [Descripción](#descripción)
@@ -10,7 +10,7 @@ Este proyecto implementa el algoritmo de alineación de secuencias de ADN usando
 
 ## Descripción
 
-Este proyecto realiza una alineación global de dos secuencias de ADN, considerando un puntaje de coincidencia/mismatch entre nucleótidos y un puntaje de gap (desajuste). El algoritmo usado es el clásico *Needleman-Wunsch*, que se utiliza comúnmente para alinear secuencias biológicas. El programa también puede generar una visualización gráfica de la matriz de alineación utilizando Graphviz.
+Este proyecto realiza una alineamiento global de dos secuencias de ADN, considerando un puntaje de coincidencia/mismatch entre nucleótidos y un puntaje de gap (desajuste). El algoritmo usado es el clásico *Needleman-Wunsch*, que se utiliza comúnmente para alinear secuencias biológicas. El programa también puede generar una visualización gráfica de la matriz de alineación utilizando Graphviz.
 
 ## Instalación
 
@@ -54,7 +54,7 @@ Supongamos que tienes dos archivos de secuencias de ADN: secuencia1.txt y secuen
 
 *./alineamiento -C1 secuencia1.txt -C2 secuencia2.txt -U matriz.txt -V -2*
 
-El programa mostrará las secuencias, alineación de estas, su puntaje máximo y generará un archivo gráfico de la matriz de coincidencias.
+El programa mostrará las secuencias, alineamiento de estas, su puntaje máximo y generará un archivo gráfico de la matriz de coincidencias.
 
 **Ejemplo de salida:**
 
