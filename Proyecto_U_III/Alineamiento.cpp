@@ -11,7 +11,12 @@ int U[128][128];  // Matriz de emparejamiento
 int gap;          // Puntaje de no emparejar (V)
 string S, T;      // Cadenas de ADN
 int** f;          // Matriz de puntuacion dinamica
+char** traceback; // Matriz de traceback
 
+void mostrarEstadisticasAlineacion(int longitud, int identidad, int similitud, int huecos, float puntaje);
+int obtenerIndice(char c) { 
+    return static_cast<int>(c); 
+}
 // Leer la matriz de emparejamiento U desde un archivo
 void leerMatriz(const string& archivo) {
     ifstream file(archivo);
@@ -49,54 +54,110 @@ string leerSecuencia(const string& archivo) {
 // Inicializar la matriz de puntuacion f
 void inicializarMatriz(int n, int m) {
     f = new int*[n + 1];
+    traceback = new char*[n + 1];
     for (int i = 0; i <= n; ++i) {
         f[i] = new int[m + 1];
+        traceback[i] = new char[m + 1];
     }
 
     // Inicializar la primera fila y columna con el puntaje de gaps
-    for (int i = 0; i <= n; ++i) f[i][0] = i * gap;
-    for (int j = 0; j <= m; ++j) f[0][j] = j * gap;
+    for (int i = 0; i <= n; ++i) {
+        f[i][0] = i * gap;
+        traceback[i][0] = 'U'; // Up
+    }
+    for (int j = 0; j <= m; ++j) {
+        f[0][j] = j * gap;
+        traceback[0][j] = 'L'; // Left
+    }
+    traceback[0][0] = '0'; // Start     
 }
 
 // Calcular la matriz de puntuacion usando el algoritmo de Needleman-Wunsch
 void calcularMatriz(int n, int m) {
     for (int i = 1; i <= n; ++i) {
         for (int j = 1; j <= m; ++j) {
+            int indexS = obtenerIndice(S[i - 1]);
+            int indexT = obtenerIndice(T[j - 1]);
+            
             int matchMismatch = f[i - 1][j - 1] + U[S[j - 1]][T[i - 1]];
             int deleteGap = f[i - 1][j] + gap;
             int insertGap = f[i][j - 1] + gap;
 
             f[i][j] = max(matchMismatch, max(deleteGap, insertGap));
+
+            if (f[i][j] == matchMismatch) {
+                traceback[i][j] = 'D'; // Diagonal
+            }
+            else if (f[i][j] == deleteGap) {
+                traceback[i][j] = 'U'; // Up
+            }
+            else {
+                traceback[i][j] = 'L'; // Left
+            }
         }
     }
 }
+// Imprimir la matriz de traceback
+void mostrarTraceback(int n, int m) {
+    cout << "\nMatriz de traceback:" << endl;
+    for (int i = 0; i <= n; ++i) {
+        for (int j = 0; j <= m; ++j) {
+            cout << traceback[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
-// Reconstruir la alineacion optima
-void reconstruirAlineacion(int n, int m) {
-    string alineacionS, alineacionT;
+// Reconstruir la alineación óptima y calcular estadísticas
+void reconstruirAlineacion(const string& S, const string& T, int** f, char** traceback, int n, int m, int U[128][128], int gap) {
+    string alineacionS = "", alineacionT = "";
+    int identidad = 0, similitud = 0, huecos = 0;
 
-    while (n > 0 || m > 0) {
-        if (n > 0 && m > 0 && f[n][m] == f[n - 1][m - 1] + U[S[m - 1]][T[n - 1]]) {
-            alineacionS = S[m - 1] + alineacionS;
-            alineacionT = T[n - 1] + alineacionT;
-            --n; --m;
-        } else if (n > 0 && f[n][m] == f[n - 1][m] + gap) {
+    int i = n, j = m;
+    while (i > 0 || j > 0) {
+        if (traceback[i][j] == 'D') {
+            alineacionS = S[j - 1] + alineacionS;
+            alineacionT = T[i - 1] + alineacionT;
+            if (S[j - 1] == T[i - 1]) identidad++;
+            similitud++;
+            --i; --j;
+        } else if (traceback[i][j] == 'U') {
             alineacionS = '-' + alineacionS;
-            alineacionT = T[n - 1] + alineacionT;
-            --n;
-        } else {
-            alineacionS = S[m - 1] + alineacionS;
+            alineacionT = T[i - 1] + alineacionT;
+            --i;
+            huecos++;
+        } else if (traceback[i][j] == 'L') {
+            alineacionS = S[j - 1] + alineacionS;
             alineacionT = '-' + alineacionT;
-            --m;
+            --j;
+            huecos++;
         }
     }
+
+    int longitudAlineacion = alineacionS.size();
+    double porcentajeSimilitud = (static_cast<double>(similitud) / longitudAlineacion) * 100.0;
 
     cout << "Secuencia 1: " << S << "\n";
     cout << "Secuencia 2: " << T << "\n";
-    cout << "Alineacion:\n" << alineacionS << "\n" << alineacionT << "\n";
-    cout << "Puntaje maximo: " << f[T.length()][S.length()] << "\n";
+    cout << "Alineación:\n" << alineacionS << "\n" << alineacionT << "\n";
+
+    mostrarEstadisticasAlineacion(longitudAlineacion, identidad, similitud, huecos, (float)f[n][m]);
+    mostrarTraceback(n, m);
 }
-void generarImagen(const string& archivo, int n, int m) {
+// Función para calcular y mostrar estadísticas de alineación
+void mostrarEstadisticasAlineacion(int longitud, int identidad, int similitud, int huecos, float puntaje) {
+    float porcentajeIdentidad = (float)identidad / longitud * 100;
+    float porcentajeSimilitud = (float)similitud / longitud * 100;
+    float porcentajeHuecos = (float)huecos / longitud * 100;
+    cout << "\n";
+    cout << "Longitud: " << longitud << "\n";
+    cout << "Identidad: " << identidad << "/" << longitud << " (" << porcentajeIdentidad << "%)\n";
+    cout << "Similitud: " << similitud << "/" << longitud << " (" << porcentajeSimilitud << "%)\n";
+    cout << "Gaps: " << huecos << "/" << longitud << " (" << porcentajeHuecos << "%)\n";
+    cout << "Puntaje máximo: " << puntaje << "\n";
+}
+
+void generarImagen(const string& archivo, const string& S, const string& T, int n, int m) {
     ofstream File(archivo);
     if (!File.is_open()) {
         cerr << "Error: No se pudo crear el archivo " << archivo << "\n";
@@ -105,53 +166,33 @@ void generarImagen(const string& archivo, int n, int m) {
 
     // Encabezado del archivo DOT
     File << "digraph G {\n";
-    File << "  graph [rankdir=LR, nodesep=0.5, ranksep=0.5];\n"; // Orientacion izquierda-derecha para facilitar alineacion
-    File << "  node [shape=circle, width=0.3, height=0.3, style=filled, fontcolor=black];\n";
+    File << "  graph [splines=false, nodesep=0.1, ranksep=0.1, bgcolor=white];\n";
+    File << "  node [shape=point, width=0.1, height=0.1, color=black];\n";
 
-    // Primera fila (secuencia S en la parte superior)
-    File << "  { rank=source; empty [shape=none, label=\"\"]; "; // Celda vacia en la esquina superior izquierda
-    for (int j = 0; j < m; ++j) {
-        File << "header" << j << " [label=\"" << S[j] << "\", shape=none]; "; // Encabezados de columnas
-    }
-    File << "}\n";
-
-    // Crear filas de la matriz (secuencia T a la izquierda y la cuadricula)
+    // Crear los nodos y conexiones basadas en coincidencias
     for (int i = 0; i < n; ++i) {
-        File << "  { rank=same; ";
-        File << "label" << i << " [label=\"" << T[i] << "\", shape=none, fontcolor=black]; "; // Etiqueta de fila a la izquierda
         for (int j = 0; j < m; ++j) {
-            string nodeName = "node" + to_string(i) + "_" + to_string(j);
-            if (S[j] == T[i]) {
-                File << nodeName << " [fillcolor=purple, label=\"\"];\n"; // Nodo morado (coincidencia)
- } else {
-                File << nodeName << " [fillcolor=white, label=\"\"];\n"; // Nodo blanco (sin coincidencia)
+            if (S[j] == T[i]) {  // Coincidencia
+                string nodeName = "node" + to_string(i) + "_" + to_string(j);
+                File << "  " << nodeName << " [pos=\"" << j << "," << -i << "!\"];\n";
+
+                // Conexiones diagonales entre coincidencias
+                if (i > 0 && j > 0 && S[j - 1] == T[i - 1]) {
+                    string prevNodeName = "node" + to_string(i - 1) + "_" + to_string(j - 1);
+                    File << "  " << prevNodeName << " -> " << nodeName << " [color=black, penwidth=1.5];\n";
+                }
             }
-        }
-        File << "}\n";
-    }
-
-    // Conexiones horizontales entre nodos en cada fila
-    for (int i = 0; i < n; ++i) {
-        for (int j = 1; j < m; ++j) {
-            string currentNode = "node" + to_string(i) + "_" + to_string(j);
-            string prevNode = "node" + to_string(i) + "_" + to_string(j - 1);
-            File << prevNode << " -> " << currentNode << " [color=gray, arrowhead=none];\n";
-        }
-    }
-
-    // Conexiones verticales entre filas
-    for (int j = 0; j < m; ++j) {
-        for (int i = 1; i < n; ++i) {
-            string currentNode = "node" + to_string(i) + "_" + to_string(j);
-            string prevNode = "node" + to_string(i - 1) + "_" + to_string(j);
-            File << prevNode << " -> " << currentNode << " [color=gray, arrowhead=none];\n";
         }
     }
 
     File << "}\n";
     File.close();
 
-    system(("dot -Tpng " + archivo + " -o matriz_coincidencias.png").c_str());
+    // Generar la imagen PNG a partir del archivo DOT
+    string command = "dot -Tpng -Gdpi=300 " + archivo + " -o coincidencias.png";
+    cout << "Ejecutando comando: " << command << endl;
+    system(command.c_str());
+    cout << "El gráfico de coincidencias ha sido generado como 'coincidencias.png'. Verifica el archivo en el directorio actual.\n";
 }
 
 int main(int argc, char* argv[]) {
@@ -184,9 +225,9 @@ int main(int argc, char* argv[]) {
     calcularMatriz(n, m);
 
     // Reconstruir y mostrar alineacion
-    reconstruirAlineacion(n, m);
-     // Generar la imagen de coincidencias
-    generarImagen("matriz_coincidencias.dot", n, m);
+    reconstruirAlineacion(S, T, f, traceback, n, m, U, gap);
+    // Generar la imagen de coincidencias
+    generarImagen("matriz_coincidencias.dot", S, T, n, m);
     for (int i = 0; i <= n; ++i) {
         delete[] f[i];
     }
